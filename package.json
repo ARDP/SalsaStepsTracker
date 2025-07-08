@@ -1,0 +1,15 @@
+{
+  "name": "salsa-steps-tracker",
+  "private": true,
+  "scripts": {
+    "migrate:v1": "pnpm exec dotenv -e v1-rest/backend/.env -- prisma migrate dev --schema=packages/prisma/schema.prisma",
+    "generate:v1": "pnpm exec dotenv -e v1-rest/backend/.env -- prisma generate --schema=packages/prisma/schema.prisma"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^8.0.0",
+    "prisma": "^5.22.0"
+  },
+  "dependencies": {
+    "@prisma/client": "5.22.0"
+  }
+}
