@@ -15,7 +15,7 @@ model User {
   image         String?
   emailVerified DateTime?
 
-  steps     Step[] // Relation: one-to-many
+  steps     Step[]
   createdAt DateTime @default(now())
 }
 
