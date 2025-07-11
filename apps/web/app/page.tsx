@@ -1,13 +1,5 @@
-'use client';
-import Link from 'next/link';
+import Home from "../components/pages/HomePage"
 
-export default function Home() {
-  return (
-    <div>
-      <p>Select a view:</p>
-      <ul>
-        <li><Link href="/steps">View Steps (REST API)</Link></li>
-      </ul>
-    </div>
-  );
+export default function Page() {
+  return <Home />
 }

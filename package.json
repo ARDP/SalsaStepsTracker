@@ -6,8 +6,10 @@
     "generate:v1": "pnpm exec dotenv -e v1-rest/backend/.env -- prisma generate --schema=packages/prisma/schema.prisma"
   },
   "devDependencies": {
+    "@types/node": "^24.0.11",
     "dotenv-cli": "^8.0.0",
-    "prisma": "^5.22.0"
+    "prisma": "^5.22.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@prisma/client": "5.22.0"
