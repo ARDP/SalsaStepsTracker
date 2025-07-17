@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material"
 import Link from "next/link"
 import { ROUTES } from "apps/web/lib/routes"
 import { getUserFromToken } from "apps/web/lib/getUser"
+import { LogoutButton } from "apps/web/components/molecules/LogoutButton"
 
 export default async function Navbar() {
   const user = await getUserFromToken()
@@ -23,7 +24,7 @@ export default async function Navbar() {
         {user ? (
           <>
             <span>Hola, {user.name}</span>
-            <Link href="/logout">Logout</Link>
+            <LogoutButton />
           </>
         ) : (
           <>

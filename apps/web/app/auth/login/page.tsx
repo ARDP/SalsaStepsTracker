@@ -4,24 +4,23 @@ import TextField from "apps/web/components/atoms/TextField"
 import { ROUTES } from "apps/web/lib/routes"
 import Link from "next/link"
 import { useState } from "react"
+import { loginUser } from "apps/web/lib/api/auth"
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   const handleLogin = async () => {
-    //TODO: move this to a separate file
-    const res = await fetch("http://localhost:3001/auth/login", {
-      method: "POST",
-      credentials: "include", // allow cookies to be set
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    })
-
-    const result = await res.json()
-    console.log(result.message)
+    try {
+      const result = await loginUser(email, password)
+      if (result) {
+        //move this to context
+        window.location.href = ROUTES.home
+      }
+    } catch (error) {
+      console.error("Login failed:", error)
+      alert("Login failed. Please check your credentials and try again.")
+    }
   }
 
   return (

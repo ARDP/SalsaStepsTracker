@@ -1,33 +1,32 @@
+import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
-import { verifyToken } from "src/utils/auth.js"
-
-const JWT_SECRET = process.env.JWT_SECRET
+import { JWT_SECRET } from "../config.js"
 
 export interface AuthRequest extends Request {
   user?: { userId: string }
 }
 
-export function authenticateJWT(
+export function requireAuth(
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ) {
-  const authHeader = req.headers.authorization
+  const token = req.cookies?.token
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ error: "Missing or malformed token" })
+  if (!token) {
+    return res.status(401).json({ error: "Missing token in cookies" })
   }
-
-  const token = authHeader.split(" ")[1]
 
   try {
     if (!JWT_SECRET) {
-      throw new Error("JWT_SECRET is not defined")
+      throw new Error("JWT_SECRET is not defined 1")
     }
-    const decoded = verifyToken(token)
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string }
+
     req.user = { userId: decoded.userId }
     next()
   } catch (err) {
+    console.error("Token verification failed:", err)
     return res.status(403).json({ error: "Invalid or expired token" })
   }
 }

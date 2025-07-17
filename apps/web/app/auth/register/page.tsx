@@ -1,27 +1,26 @@
 "use client"
 import Button from "apps/web/components/atoms/Button"
 import TextField from "apps/web/components/atoms/TextField"
+import { registerUser } from "apps/web/lib/api/auth"
 import { useState } from "react"
 
 const Register = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [name, setName] = useState("")
-  //TODO: move this to a separate file
-  const handleRegister = async () => {
-    const res = await fetch("http://localhost:3001/auth/register", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password, name }),
-    })
 
-    const result = await res.json()
-    console.log(result.message)
+  const handleRegister = async () => {
+    try {
+      const res = await registerUser(email, password, name)
+      if (res) {
+        console.log("Registration successful:", res)
+      }
+    } catch (error) {
+      console.error("Registration failed:", error)
+      alert("Registration failed. Please check your details and try again.")
+    }
   }
-  //TODO: add validation with formik
+
   return (
     <div>
       <h1>Register Page</h1>

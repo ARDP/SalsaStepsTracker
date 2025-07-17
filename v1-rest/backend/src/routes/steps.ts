@@ -1,19 +1,39 @@
-import { Router } from "express";
-import { prisma } from "@repo/prisma/client.js";
+import { Router } from "express"
+import { prisma } from "@repo/prisma/client.js"
+import { AuthRequest, requireAuth } from "../middleware/auth.js"
 
-const router = Router();
+const router = Router()
 
-router.get("/", async (_req, res) => {
-  const steps = await prisma.step.findMany();
-  res.json(steps);
-});
+router.get("/", requireAuth, async (req: AuthRequest, res) => {
+  if (!req.user) return res.status(401).json({ error: "Unauthorized" })
 
-router.post("/", async (req, res) => {
-  const { title, description, difficulty, videoUrl } = req.body;
-  const newStep = await prisma.step.create({
-    data: { title, description, difficulty, videoUrl },
-  });
-  res.status(201).json(newStep);
-});
+  const steps = await prisma.step.findMany({
+    where: {
+      userId: req.user.userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  })
 
-export default router;
+  res.json(steps)
+})
+
+router.post("/steps", requireAuth, async (req: AuthRequest, res) => {
+  const { title, description, difficulty, videoUrl } = req.body
+
+  if (!req.user) return res.status(401).json({ error: "Unauthorized" })
+
+  const step = await prisma.step.create({
+    data: {
+      title,
+      description,
+      difficulty,
+      videoUrl,
+      userId: req.user.userId,
+    },
+  })
+
+  res.status(201).json(step)
+})
+export default router
