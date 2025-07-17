@@ -4,10 +4,9 @@ import jwt from "jsonwebtoken"
 
 import bcrypt from "bcryptjs"
 import { signToken, verifyToken } from "src/utils/auth.js"
+import { JWT_SECRET } from "src/config.js"
 
 const router = express.Router()
-
-const JWT_SECRET = process.env.JWT_SECRET
 
 router.post("/register", async (req, res) => {
   if (!JWT_SECRET) {

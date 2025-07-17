@@ -36,4 +36,50 @@ router.post("/steps", requireAuth, async (req: AuthRequest, res) => {
 
   res.status(201).json(step)
 })
+
+router.put("/steps/:id", requireAuth, async (req: AuthRequest, res) => {
+  const { id } = req.params
+  const { title, description, difficulty, videoUrl } = req.body
+  if (!req.user) return res.status(401).json({ error: "Unauthorized" })
+  const step = await prisma.step.update({
+    where: {
+      id,
+      userId: req.user.userId,
+    },
+    data: {
+      title,
+      description,
+      difficulty,
+      videoUrl,
+    },
+  })
+  res.json(step)
+})
+
+router.delete("/steps/:id", requireAuth, async (req: AuthRequest, res) => {
+  const { id } = req.params
+
+  if (!req.user) return res.status(401).json({ error: "Unauthorized" })
+
+  //first check if the step exists
+  const existingStep = await prisma.step.findUnique({
+    where: {
+      id,
+      userId: req.user.userId,
+    },
+  })
+  if (!existingStep) {
+    return res.status(404).json({ error: "Step not found" })
+  }
+
+  await prisma.step.delete({
+    where: {
+      id,
+      userId: req.user.userId,
+    },
+  })
+
+  res.status(204).send()
+})
+
 export default router

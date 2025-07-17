@@ -19,7 +19,7 @@ export function requireAuth(
 
   try {
     if (!JWT_SECRET) {
-      throw new Error("JWT_SECRET is not defined 1")
+      throw new Error("JWT_SECRET is not defined")
     }
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string }
 

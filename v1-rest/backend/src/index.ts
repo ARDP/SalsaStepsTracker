@@ -1,12 +1,9 @@
 import express from "express"
 import cors from "cors"
-import dotenv from "dotenv"
 import stepRoutes from "./routes/steps.js"
 import authRoutes from "./routes/auth.js"
 import cookieParser from "cookie-parser"
 import { Request, Response, NextFunction } from "express"
-
-dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 3001

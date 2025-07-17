@@ -14,12 +14,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+      <body>
         <>
           <nav>
             <Navbar />
           </nav>
-          {children}
+          <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+            {children}
+          </div>
         </>
       </body>
     </html>
