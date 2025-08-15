@@ -35,6 +35,10 @@ export default function StepsPage() {
         setSteps(data)
         setLoading(false)
       })
+      .catch((error) => {
+        console.error("Failed to fetch steps:", error)
+        setLoading(false)
+      })
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
