@@ -2,6 +2,7 @@
 
 import { Button } from "@mui/material"
 import { useRouter } from "next/navigation"
+import LogoutIcon from "@mui/icons-material/Logout"
 
 export function LogoutButton() {
   const router = useRouter()
@@ -22,7 +23,7 @@ export function LogoutButton() {
 
   return (
     <Button onClick={handleLogout} color="inherit">
-      Logout
+      <LogoutIcon />
     </Button>
   )
 }

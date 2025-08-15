@@ -61,7 +61,7 @@ const StepsModal = ({
       <Box sx={style}>
         <Box p={4}>
           <Typography variant="h4" mb={4}>
-            Salsa Steps (REST)
+            {isEdit ? "Edit Step" : "Create Step"}
           </Typography>
           <Box
             component="form"
@@ -102,7 +102,7 @@ const StepsModal = ({
               onChange={(e) => setVideoUrl(e.target.value)}
             />
             <MUIButton variant="contained" color="primary" type="submit">
-              {isEdit ? "Edit Step" : "Create Step"}
+              Save
             </MUIButton>
           </Box>
         </Box>
