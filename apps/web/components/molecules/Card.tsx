@@ -6,8 +6,10 @@ import CardContent from "@mui/material/CardContent"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import { Modal, TextField } from "@mui/material"
+import DeleteIcon from "@mui/icons-material/Delete"
+import EditIcon from "@mui/icons-material/Edit"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   MenuItem,
   Select,
@@ -76,7 +78,7 @@ export default function StepCard({
   return (
     <>
       <Card sx={{ minWidth: 275 }}>
-        <CardContent onClick={onClick}>
+        <CardContent>
           <Typography variant="h5" component="div">
             {step.title}
           </Typography>
@@ -97,7 +99,10 @@ export default function StepCard({
         </CardContent>
         <CardActions>
           <Button size="small" onClick={() => setModalOpen(true)}>
-            Delete
+            <DeleteIcon />
+          </Button>
+          <Button size="small" onClick={onClick}>
+            <EditIcon />
           </Button>
         </CardActions>
       </Card>
@@ -109,9 +114,6 @@ export default function StepCard({
       >
         <Box sx={style}>
           <Box p={4}>
-            <Typography variant="h4" mb={4}>
-              Salsa Steps (REST)
-            </Typography>
             <Box
               component="form"
               mb={4}
