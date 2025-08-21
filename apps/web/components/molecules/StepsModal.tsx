@@ -135,11 +135,13 @@ const StepsModal = ({
                 label="This is a variation from"
                 onChange={(e) => setVariation(e.target.value)}
               >
-                {steps.map((step: Step) => (
-                  <MenuItem key={step.id} value={step.id}>
-                    {step.title}
-                  </MenuItem>
-                ))}
+                {steps &&
+                  steps.length > 0 &&
+                  steps.map((step: Step) => (
+                    <MenuItem key={step.id} value={step.id}>
+                      {step.title}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
             <MUIButton variant="contained" color="primary" type="submit">
