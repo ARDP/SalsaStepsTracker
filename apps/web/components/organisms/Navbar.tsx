@@ -1,13 +1,6 @@
 import React from "react"
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-  Avatar,
-  Grid,
-} from "@mui/material"
+import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material"
+import { Grid } from "@mui/material"
 import Link from "next/link"
 import { ROUTES } from "apps/web/lib/routes"
 import { LogoutButton } from "apps/web/components/molecules/LogoutButton"
@@ -27,13 +20,13 @@ export default async function Navbar() {
         {user ? (
           <>
             <Grid container alignItems="center" spacing={1}>
-              <Grid item>
+              <Grid size="grow">
                 <Button color="inherit">{user.name}</Button>
               </Grid>
-              <Grid item>
+              <Grid size="grow">
                 <AccountCircleIcon />
               </Grid>
-              <Grid item>
+              <Grid size="grow">
                 <LogoutButton />
               </Grid>
             </Grid>

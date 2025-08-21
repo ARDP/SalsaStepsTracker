@@ -2,5 +2,8 @@
   "name": "@repo/prisma",
   "version": "1.0.0",
   "main": "client.ts",
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "lint": "echo \"No lint for prisma\""
+  }
 }

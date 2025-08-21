@@ -1,15 +1,29 @@
 {
   "name": "salsa-steps-tracker",
   "private": true,
-  "scripts": {
-    "migrate:v1": "pnpm exec dotenv -e v1-rest/backend/.env -- prisma migrate dev --schema=packages/prisma/schema.prisma",
-    "generate:v1": "pnpm exec dotenv -e v1-rest/backend/.env -- prisma generate --schema=packages/prisma/schema.prisma"
-  },
+  "packageManager": "pnpm@9.12.0",
+ "scripts": {
+  "migrate:v1": "pnpm exec dotenv -e v1-rest/backend/.env -- prisma migrate dev --schema=packages/prisma/schema.prisma",
+  "generate:v1": "pnpm exec dotenv -e v1-rest/backend/.env -- prisma generate --schema=packages/prisma/schema.prisma",
+  "dev": "turbo run dev --parallel",
+  "build": "turbo run build",
+  "lint": "turbo run lint --filter=web --filter=v1-backend --filter=@repo/prisma --parallel --continue",
+  "test": "turbo run test"
+},
   "devDependencies": {
+    "@eslint/js": "^9.33.0",
     "@types/node": "^24.0.11",
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "@typescript-eslint/parser": "^8.40.0",
     "dotenv-cli": "^8.0.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.3.0",
+    "jiti": "^2.5.1",
     "prisma": "^5.22.0",
-    "typescript": "^5.8.3"
+    "turbo": "^2.5.6",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.40.0"
   },
   "dependencies": {
     "@prisma/client": "5.22.0"

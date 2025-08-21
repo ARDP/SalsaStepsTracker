@@ -1,4 +1,4 @@
 packages:
-  - v1-rest/backend
-  - packages/prisma
-  - apps/web
+  - "apps/*"
+  - "v1-rest/*"
+  - "packages/*"

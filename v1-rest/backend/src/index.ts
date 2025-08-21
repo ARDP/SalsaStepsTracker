@@ -3,7 +3,7 @@ import cors from "cors"
 import stepRoutes from "./routes/steps.js"
 import authRoutes from "./routes/auth.js"
 import cookieParser from "cookie-parser"
-import { Request, Response, NextFunction } from "express"
+import { Request, Response } from "express"
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -32,7 +32,7 @@ app.use(cookieParser())
 app.use("/steps", stepRoutes)
 app.use("/auth", authRoutes)
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response) => {
   console.error("🔥 Uncaught server error:", err)
   res.status(500).send("Something went wrong")
 })
