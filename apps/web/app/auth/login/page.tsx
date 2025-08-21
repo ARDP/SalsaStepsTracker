@@ -24,9 +24,17 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <h1>Login Page</h1>
-      <p>This is the login page. Please enter your credentials.</p>
+    <div
+      style={{
+        backgroundColor: "#f5f5f5",
+        padding: "20px",
+        maxWidth: "400px",
+        margin: "50px auto",
+        borderRadius: "8px",
+      }}
+    >
+      <h1>Login</h1>
+
       <TextField
         label="Username"
         variant="outlined"

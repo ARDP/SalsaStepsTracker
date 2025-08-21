@@ -5,6 +5,7 @@ import StepCard from "apps/web/components/molecules/Card"
 import Button from "apps/web/components/atoms/Button"
 import StepsModal from "apps/web/components/molecules/StepsModal"
 import { Step } from "@prisma/client"
+import { useUser } from "apps/web/lib/UserContext"
 
 export default function StepsPage() {
   const [steps, setSteps] = useState<Step[]>([])
@@ -124,10 +125,14 @@ export default function StepsPage() {
     setOpen(true)
   }
 
+  const user = useUser()
+  if (!user) {
+    return <Typography>Please log in to view steps.</Typography>
+  }
   return (
     <Box>
       <Button
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, ml: 2 }}
         variant="contained"
         color="primary"
         onClick={() => {

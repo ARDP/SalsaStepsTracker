@@ -77,7 +77,7 @@ export default function StepCard({
 
   return (
     <>
-      <Card sx={{ height: 200, margin: 2, width: 300 }}>
+      <Card sx={{ minHeight: 200, height: "100%", margin: 2, width: 300 }}>
         <CardContent>
           <Typography variant="h5" component="div">
             {step.title}

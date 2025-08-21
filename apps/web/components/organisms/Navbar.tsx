@@ -10,9 +10,9 @@ import {
 } from "@mui/material"
 import Link from "next/link"
 import { ROUTES } from "apps/web/lib/routes"
-import { getUserFromToken } from "apps/web/lib/getUser"
 import { LogoutButton } from "apps/web/components/molecules/LogoutButton"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import { getUserFromToken } from "apps/web/lib/getUser"
 
 export default async function Navbar() {
   const user = await getUserFromToken()
@@ -22,10 +22,6 @@ export default async function Navbar() {
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Typography variant="h6">Salsa Steps</Typography>
-
-          <Button color="inherit" component={Link} href={ROUTES.steps}>
-            Steps
-          </Button>
         </Box>
 
         {user ? (
@@ -43,14 +39,14 @@ export default async function Navbar() {
             </Grid>
           </>
         ) : (
-          <>
+          <Grid container alignItems="center" spacing={1}>
             <Button color="inherit" component={Link} href={ROUTES.login}>
               Login
             </Button>
             <Button color="inherit" component={Link} href={ROUTES.register}>
               Register
             </Button>
-          </>
+          </Grid>
         )}
       </Toolbar>
     </AppBar>
