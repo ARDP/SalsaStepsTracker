@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import {
   Box,
   Typography,
@@ -10,6 +10,7 @@ import {
   Button as MUIButton,
   Modal,
 } from "@mui/material"
+import { Step } from "@prisma/client"
 
 const style = {
   position: "absolute",
@@ -35,6 +36,9 @@ type StepsModalProps = {
   setDifficulty: (value: string) => void
   videoUrl: string
   setVideoUrl: (value: string) => void
+  variation: string
+  setVariation: (value: string) => void
+  stepsCreated: Step[]
   handleSubmit: (e: React.FormEvent) => Promise<void>
 }
 const StepsModal = ({
@@ -49,8 +53,30 @@ const StepsModal = ({
   setDifficulty,
   videoUrl,
   setVideoUrl,
+  variation,
+  setVariation,
   handleSubmit,
+  stepsCreated,
 }: StepsModalProps) => {
+  const [steps, setSteps] = React.useState([])
+  const [, setLoading] = React.useState(true)
+
+  useEffect(() => {
+    fetch("http://localhost:3001/steps/allSteps", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setSteps(data)
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error("Failed to fetch steps:", error)
+        setLoading(false)
+      })
+  }, [stepsCreated])
+
   return (
     <Modal
       open={open}
@@ -101,6 +127,21 @@ const StepsModal = ({
               value={videoUrl}
               onChange={(e) => setVideoUrl(e.target.value)}
             />
+
+            <FormControl fullWidth>
+              <InputLabel>This is a variation</InputLabel>
+              <Select
+                value={variation}
+                label="This is a variation from"
+                onChange={(e) => setVariation(e.target.value)}
+              >
+                {steps.map((step: Step) => (
+                  <MenuItem key={step.id} value={step.id}>
+                    {step.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <MUIButton variant="contained" color="primary" type="submit">
               Save
             </MUIButton>

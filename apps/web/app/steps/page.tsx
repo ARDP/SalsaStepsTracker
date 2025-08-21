@@ -4,14 +4,7 @@ import { Box, Typography, Grid as MuiGrid } from "@mui/material"
 import StepCard from "apps/web/components/molecules/Card"
 import Button from "apps/web/components/atoms/Button"
 import StepsModal from "apps/web/components/molecules/StepsModal"
-
-type Step = {
-  id: string
-  title: string
-  description?: string
-  difficulty: string
-  videoUrl?: string
-}
+import { Step } from "@prisma/client"
 
 export default function StepsPage() {
   const [steps, setSteps] = useState<Step[]>([])
@@ -22,6 +15,7 @@ export default function StepsPage() {
   const [description, setDescription] = useState("")
   const [difficulty, setDifficulty] = useState("BEGINNER")
   const [videoUrl, setVideoUrl] = useState("")
+  const [variation, setVariation] = useState("")
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
 
@@ -45,7 +39,14 @@ export default function StepsPage() {
     e.preventDefault()
 
     if (isEdit) {
-      const updatedStep = { id, title, description, difficulty, videoUrl }
+      const updatedStep = {
+        id,
+        title,
+        description,
+        difficulty,
+        videoUrl,
+        variation,
+      }
 
       const res = await fetch(`http://localhost:3001/steps/steps/${id}`, {
         method: "PUT",
@@ -63,7 +64,13 @@ export default function StepsPage() {
         console.error("Failed to update step:", res.statusText)
       }
     } else {
-      const newStep = { title, description, difficulty, videoUrl }
+      const newStep = {
+        title,
+        description,
+        difficulty,
+        videoUrl,
+        variation,
+      }
 
       const res = await fetch("http://localhost:3001/steps/steps", {
         method: "POST",
@@ -79,6 +86,7 @@ export default function StepsPage() {
         setDescription("")
         setDifficulty("BEGINNER")
         setVideoUrl("")
+        setVariation("")
       } else {
         console.error("Failed to create step:", res.statusText)
       }
@@ -103,12 +111,14 @@ export default function StepsPage() {
       setDescription(step.description || "")
       setDifficulty(step.difficulty)
       setVideoUrl(step.videoUrl || "")
+      setVariation(step.parentId || "")
     } else {
       setIsEdit(false)
       setTitle("")
       setDescription("")
       setDifficulty("BEGINNER")
       setVideoUrl("")
+      setVariation("")
     }
 
     setOpen(true)
@@ -153,6 +163,9 @@ export default function StepsPage() {
         videoUrl={videoUrl}
         setVideoUrl={setVideoUrl}
         handleSubmit={handleSubmit}
+        setVariation={setVariation}
+        variation={variation}
+        stepsCreated={steps}
       />
     </Box>
   )

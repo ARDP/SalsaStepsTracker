@@ -29,6 +29,10 @@ model Step {
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
+
+  parentId   String?
+  parent     Step?   @relation("StepVariations", fields: [parentId], references: [id])
+  variations Step[]  @relation("StepVariations")
 }
 
 enum Difficulty {

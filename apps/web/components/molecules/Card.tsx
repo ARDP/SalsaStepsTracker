@@ -77,7 +77,7 @@ export default function StepCard({
 
   return (
     <>
-      <Card sx={{ minWidth: 275 }}>
+      <Card sx={{ height: 200, margin: 2, width: 300 }}>
         <CardContent>
           <Typography variant="h5" component="div">
             {step.title}
@@ -93,7 +93,9 @@ export default function StepCard({
                 Watch Video
               </a>
             ) : (
-              <span>No Video Available</span>
+              <div style={{ color: "red", marginTop: "10px" }}>
+                <span>No Video Available</span>
+              </div>
             )}
           </Typography>
         </CardContent>

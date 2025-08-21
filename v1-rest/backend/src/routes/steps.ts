@@ -19,10 +19,38 @@ router.get("/", requireAuth, async (req: AuthRequest, res) => {
   res.json(steps)
 })
 
+router.get("/allSteps", requireAuth, async (req: AuthRequest, res) => {
+  if (!req.user) return res.status(401).json({ error: "Unauthorized" })
+
+  const steps = await prisma.step.findMany({
+    where: {
+      userId: req.user.userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  })
+
+  res.json(steps)
+})
+
 router.post("/steps", requireAuth, async (req: AuthRequest, res) => {
-  const { title, description, difficulty, videoUrl } = req.body
+  const { title, description, difficulty, videoUrl, variation } = req.body
 
   if (!req.user) return res.status(401).json({ error: "Unauthorized" })
+
+  //check if step is already created by the user with the same title
+  const existingStep = await prisma.step.findFirst({
+    where: {
+      title,
+      userId: req.user.userId,
+    },
+  })
+  if (existingStep) {
+    return res
+      .status(400)
+      .json({ error: "Step with this title already exists" })
+  }
 
   const step = await prisma.step.create({
     data: {
@@ -31,6 +59,7 @@ router.post("/steps", requireAuth, async (req: AuthRequest, res) => {
       difficulty,
       videoUrl,
       userId: req.user.userId,
+      parentId: variation || null,
     },
   })
 
@@ -39,7 +68,7 @@ router.post("/steps", requireAuth, async (req: AuthRequest, res) => {
 
 router.put("/steps/:id", requireAuth, async (req: AuthRequest, res) => {
   const { id } = req.params
-  const { title, description, difficulty, videoUrl } = req.body
+  const { title, description, difficulty, videoUrl, variation } = req.body
   if (!req.user) return res.status(401).json({ error: "Unauthorized" })
   const step = await prisma.step.update({
     where: {
@@ -51,6 +80,7 @@ router.put("/steps/:id", requireAuth, async (req: AuthRequest, res) => {
       description,
       difficulty,
       videoUrl,
+      parentId: variation || null,
     },
   })
   res.json(step)
